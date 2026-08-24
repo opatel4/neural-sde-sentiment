@@ -1,0 +1,144 @@
+====================================================================================================
+CALENDAR VIOLATION DIAGNOSTIC
+====================================================================================================
+
+### Bates_2010-2012
+  tolerance sweep (violation rate at increasing tolerance):
+    tol=1e-06    rate= 0.018  #
+    tol=1e-05    rate= 0.018  #
+    tol=1e-04    rate= 0.017  #
+    tol=5e-04    rate= 0.015  
+    tol=1e-03    rate= 0.014  
+    tol=2e-03    rate= 0.010  
+    tol=5e-03    rate= 0.004  
+  median POSITIVE increment (true signal scale) : 0.01356
+  median violation magnitude                    : 0.00247
+  ratio violation/signal                        : 0.182   <-- noise-scale
+  violation rate by maturity gap (T_i -> T_{i+1}), strict tol:
+    0.1->0.3:   0.002  
+    0.3->0.6:   0.001  
+    0.6->0.9:   0.004  
+    0.9->1.2:   0.008  
+    1.2->1.5:   0.011  
+    1.5->1.8:   0.019  
+    1.8->2.0:   0.070  ###
+  short-end mean 0.002  |  long-end mean 0.033   -> LONG-end concentrated (noise signature)
+
+### Bates_2013-2015
+  tolerance sweep (violation rate at increasing tolerance):
+    tol=1e-06    rate= 0.024  #
+    tol=1e-05    rate= 0.024  #
+    tol=1e-04    rate= 0.023  #
+    tol=5e-04    rate= 0.021  #
+    tol=1e-03    rate= 0.018  #
+    tol=2e-03    rate= 0.013  
+    tol=5e-03    rate= 0.006  
+  median POSITIVE increment (true signal scale) : 0.01172
+  median violation magnitude                    : 0.00234
+  ratio violation/signal                        : 0.199   <-- noise-scale
+  violation rate by maturity gap (T_i -> T_{i+1}), strict tol:
+    0.1->0.3:   0.002  
+    0.3->0.6:   0.002  
+    0.6->0.9:   0.006  
+    0.9->1.2:   0.014  
+    1.2->1.5:   0.020  #
+    1.5->1.8:   0.027  #
+    1.8->2.0:   0.088  ####
+  short-end mean 0.003  |  long-end mean 0.045   -> LONG-end concentrated (noise signature)
+
+### Bates_2016-2019
+  tolerance sweep (violation rate at increasing tolerance):
+    tol=1e-06    rate= 0.025  #
+    tol=1e-05    rate= 0.024  #
+    tol=1e-04    rate= 0.024  #
+    tol=5e-04    rate= 0.021  #
+    tol=1e-03    rate= 0.019  #
+    tol=2e-03    rate= 0.014  
+    tol=5e-03    rate= 0.006  
+  median POSITIVE increment (true signal scale) : 0.01035
+  median violation magnitude                    : 0.00245
+  ratio violation/signal                        : 0.237   <-- noise-scale
+  violation rate by maturity gap (T_i -> T_{i+1}), strict tol:
+    0.1->0.3:   0.003  
+    0.3->0.6:   0.002  
+    0.6->0.9:   0.009  
+    0.9->1.2:   0.019  
+    1.2->1.5:   0.024  #
+    1.5->1.8:   0.029  #
+    1.8->2.0:   0.075  ###
+  short-end mean 0.005  |  long-end mean 0.042   -> LONG-end concentrated (noise signature)
+
+### Bates_2020-2022
+  tolerance sweep (violation rate at increasing tolerance):
+    tol=1e-06    rate= 0.014  
+    tol=1e-05    rate= 0.014  
+    tol=1e-04    rate= 0.013  
+    tol=5e-04    rate= 0.012  
+    tol=1e-03    rate= 0.010  
+    tol=2e-03    rate= 0.008  
+    tol=5e-03    rate= 0.004  
+  median POSITIVE increment (true signal scale) : 0.01478
+  median violation magnitude                    : 0.00268
+  ratio violation/signal                        : 0.181   <-- noise-scale
+  violation rate by maturity gap (T_i -> T_{i+1}), strict tol:
+    0.1->0.3:   0.001  
+    0.3->0.6:   0.000  
+    0.6->0.9:   0.003  
+    0.9->1.2:   0.004  
+    1.2->1.5:   0.008  
+    1.5->1.8:   0.012  
+    1.8->2.0:   0.058  ##
+  short-end mean 0.001  |  long-end mean 0.026   -> LONG-end concentrated (noise signature)
+
+### Bergomi_2010-2012
+  tolerance sweep (violation rate at increasing tolerance):
+    tol=1e-06    rate= 0.031  #
+    tol=1e-05    rate= 0.031  #
+    tol=1e-04    rate= 0.030  #
+    tol=5e-04    rate= 0.027  #
+    tol=1e-03    rate= 0.024  #
+    tol=2e-03    rate= 0.020  #
+    tol=5e-03    rate= 0.011  
+  median POSITIVE increment (true signal scale) : 0.01107
+  median violation magnitude                    : 0.00324
+  ratio violation/signal                        : 0.293   <-- noise-scale
+  violation rate by maturity gap (T_i -> T_{i+1}), strict tol:
+    0.1->0.3:   0.000  
+    0.3->0.6:   0.001  
+    0.6->0.9:   0.007  
+    0.9->1.2:   0.016  
+    1.2->1.5:   0.035  #
+    1.5->1.8:   0.047  ##
+    1.8->2.0:   0.096  ####
+  short-end mean 0.003  |  long-end mean 0.059   -> LONG-end concentrated (noise signature)
+
+### Bergomi_2013-2015
+  tolerance sweep (violation rate at increasing tolerance):
+    tol=1e-06    rate= 0.072  ####
+    tol=1e-05    rate= 0.072  ####
+    tol=1e-04    rate= 0.071  ####
+    tol=5e-04    rate= 0.064  ###
+    tol=1e-03    rate= 0.057  ###
+    tol=2e-03    rate= 0.046  ##
+    tol=5e-03    rate= 0.025  #
+  median POSITIVE increment (true signal scale) : 0.00812
+  median violation magnitude                    : 0.00311
+  ratio violation/signal                        : 0.383   <-- noise-scale
+  violation rate by maturity gap (T_i -> T_{i+1}), strict tol:
+    0.1->0.3:   0.000  
+    0.3->0.6:   0.002  
+    0.6->0.9:   0.030  #
+    0.9->1.2:   0.069  ###
+    1.2->1.5:   0.103  #####
+    1.5->1.8:   0.124  ######
+    1.8->2.0:   0.153  #######
+  short-end mean 0.011  |  long-end mean 0.127   -> LONG-end concentrated (noise signature)
+
+====================================================================================================
+INTERPRETATION
+  * If rates collapse toward 0 as tolerance passes ~1e-3, and violations
+    concentrate at the LONG end with magnitude << typical increment,
+    the violations are Monte-Carlo noise -> do NOT report as a model defect.
+  * If rates persist at generous tolerance and sit at the SHORT end,
+    they are real -> report them.
+====================================================================================================

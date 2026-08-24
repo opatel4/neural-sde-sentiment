@@ -1,0 +1,226 @@
+nohup: ignoring input
+[cfg] data=/home/opatel4/offline_out  weights=/home/opatel4/offline_models  model=all  sentiment=both
+Using compute device: cuda
+
+============================================================
+STARTING EXPERIMENT: CNN_Heston_In1_OutBase
+Saving to: /home/opatel4/offline_models
+============================================================
+Targeting 5 Parameters: ['kappa', 'theta', 'sigma', 'v0', 'rho_SV']
+Input: 1 Channel (IV Only)
+  Epoch 001/1000 | Train Loss: 0.04208 | Val Loss: 0.03466 | Patience: 0/30
+  Epoch 010/1000 | Train Loss: 0.02425 | Val Loss: 0.02591 | Patience: 2/30
+  Epoch 020/1000 | Train Loss: 0.02158 | Val Loss: 0.02507 | Patience: 1/30
+  Epoch 030/1000 | Train Loss: 0.02024 | Val Loss: 0.02366 | Patience: 9/30
+  Epoch 040/1000 | Train Loss: 0.01946 | Val Loss: 0.01997 | Patience: 0/30
+  Epoch 050/1000 | Train Loss: 0.01875 | Val Loss: 0.02118 | Patience: 1/30
+  Epoch 060/1000 | Train Loss: 0.01808 | Val Loss: 0.02540 | Patience: 9/30
+  Epoch 070/1000 | Train Loss: 0.01667 | Val Loss: 0.02009 | Patience: 19/30
+  Epoch 080/1000 | Train Loss: 0.01596 | Val Loss: 0.02621 | Patience: 5/30
+  Epoch 090/1000 | Train Loss: 0.01575 | Val Loss: 0.02210 | Patience: 2/30
+  Epoch 100/1000 | Train Loss: 0.01540 | Val Loss: 0.02006 | Patience: 12/30
+  Epoch 110/1000 | Train Loss: 0.01525 | Val Loss: 0.01908 | Patience: 22/30
+  Epoch 120/1000 | Train Loss: 0.01501 | Val Loss: 0.01934 | Patience: 6/30
+  Epoch 130/1000 | Train Loss: 0.01487 | Val Loss: 0.02020 | Patience: 6/30
+  Epoch 140/1000 | Train Loss: 0.01491 | Val Loss: 0.01827 | Patience: 4/30
+  Epoch 150/1000 | Train Loss: 0.01477 | Val Loss: 0.02405 | Patience: 14/30
+  Epoch 160/1000 | Train Loss: 0.01475 | Val Loss: 0.02174 | Patience: 24/30
+
+  [!] Early stopping at Epoch 166. Best Val Loss: 0.01704
+Saved Full PyTorch Model to: /home/opatel4/offline_models/CNN_Heston_In1_OutBase.pt
+Saved State Dictionary to: /home/opatel4/offline_models/CNN_Heston_In1_OutBase.pth
+
+============================================================
+STARTING EXPERIMENT: CNN_Heston_In2_OutBase
+Saving to: /home/opatel4/offline_models
+============================================================
+Targeting 5 Parameters: ['kappa', 'theta', 'sigma', 'v0', 'rho_SV']
+Input: 2 Channels (IV + Synthetic Sentiment)
+  Epoch 001/1000 | Train Loss: 0.02596 | Val Loss: 0.01708 | Patience: 0/30
+  Epoch 010/1000 | Train Loss: 0.00979 | Val Loss: 0.00920 | Patience: 0/30
+  Epoch 020/1000 | Train Loss: 0.00851 | Val Loss: 0.00773 | Patience: 0/30
+  Epoch 030/1000 | Train Loss: 0.00769 | Val Loss: 0.00708 | Patience: 0/30
+  Epoch 040/1000 | Train Loss: 0.00710 | Val Loss: 0.00677 | Patience: 9/30
+  Epoch 050/1000 | Train Loss: 0.00617 | Val Loss: 0.00582 | Patience: 0/30
+  Epoch 060/1000 | Train Loss: 0.00601 | Val Loss: 0.00701 | Patience: 10/30
+  Epoch 070/1000 | Train Loss: 0.00591 | Val Loss: 0.00550 | Patience: 0/30
+  Epoch 080/1000 | Train Loss: 0.00579 | Val Loss: 0.00706 | Patience: 1/30
+  Epoch 090/1000 | Train Loss: 0.00567 | Val Loss: 0.00536 | Patience: 0/30
+  Epoch 100/1000 | Train Loss: 0.00555 | Val Loss: 0.00656 | Patience: 10/30
+  Epoch 110/1000 | Train Loss: 0.00512 | Val Loss: 0.00594 | Patience: 4/30
+  Epoch 120/1000 | Train Loss: 0.00512 | Val Loss: 0.00541 | Patience: 3/30
+  Epoch 130/1000 | Train Loss: 0.00486 | Val Loss: 0.00546 | Patience: 13/30
+  Epoch 140/1000 | Train Loss: 0.00491 | Val Loss: 0.00535 | Patience: 5/30
+  Epoch 150/1000 | Train Loss: 0.00474 | Val Loss: 0.00525 | Patience: 15/30
+  Epoch 160/1000 | Train Loss: 0.00477 | Val Loss: 0.00547 | Patience: 1/30
+  Epoch 170/1000 | Train Loss: 0.00469 | Val Loss: 0.00501 | Patience: 11/30
+  Epoch 180/1000 | Train Loss: 0.00460 | Val Loss: 0.00558 | Patience: 21/30
+
+  [!] Early stopping at Epoch 189. Best Val Loss: 0.00485
+Saved Full PyTorch Model to: /home/opatel4/offline_models/CNN_Heston_In2_OutBase.pt
+Saved State Dictionary to: /home/opatel4/offline_models/CNN_Heston_In2_OutBase.pth
+
+============================================================
+STARTING EXPERIMENT: CNN_Bates_In1_OutBase
+Saving to: /home/opatel4/offline_models
+============================================================
+Targeting 8 Parameters: ['kappa', 'theta', 'sigma', 'v0', 'rho_SV', 'lambdaJ', 'muJ', 'sigmaJ']
+Input: 1 Channel (IV Only)
+  Epoch 001/1000 | Train Loss: 0.05062 | Val Loss: 0.04806 | Patience: 0/30
+  Epoch 010/1000 | Train Loss: 0.03645 | Val Loss: 0.03895 | Patience: 1/30
+  Epoch 020/1000 | Train Loss: 0.03405 | Val Loss: 0.03596 | Patience: 0/30
+  Epoch 030/1000 | Train Loss: 0.03267 | Val Loss: 0.03578 | Patience: 5/30
+  Epoch 040/1000 | Train Loss: 0.03155 | Val Loss: 0.03304 | Patience: 9/30
+  Epoch 050/1000 | Train Loss: 0.02979 | Val Loss: 0.03358 | Patience: 3/30
+  Epoch 060/1000 | Train Loss: 0.02872 | Val Loss: 0.03124 | Patience: 0/30
+  Epoch 070/1000 | Train Loss: 0.02850 | Val Loss: 0.03461 | Patience: 10/30
+  Epoch 080/1000 | Train Loss: 0.02794 | Val Loss: 0.03405 | Patience: 20/30
+  Epoch 090/1000 | Train Loss: 0.02757 | Val Loss: 0.03678 | Patience: 30/30
+
+  [!] Early stopping at Epoch 90. Best Val Loss: 0.03124
+Saved Full PyTorch Model to: /home/opatel4/offline_models/CNN_Bates_In1_OutBase.pt
+Saved State Dictionary to: /home/opatel4/offline_models/CNN_Bates_In1_OutBase.pth
+
+============================================================
+STARTING EXPERIMENT: CNN_Bates_In2_OutBase
+Saving to: /home/opatel4/offline_models
+============================================================
+Targeting 8 Parameters: ['kappa', 'theta', 'sigma', 'v0', 'rho_SV', 'lambdaJ', 'muJ', 'sigmaJ']
+Input: 2 Channels (IV + Synthetic Sentiment)
+  Epoch 001/1000 | Train Loss: 0.03964 | Val Loss: 0.03192 | Patience: 0/30
+  Epoch 010/1000 | Train Loss: 0.02419 | Val Loss: 0.02249 | Patience: 0/30
+  Epoch 020/1000 | Train Loss: 0.02214 | Val Loss: 0.02115 | Patience: 0/30
+  Epoch 030/1000 | Train Loss: 0.02082 | Val Loss: 0.02075 | Patience: 1/30
+  Epoch 040/1000 | Train Loss: 0.02003 | Val Loss: 0.02099 | Patience: 11/30
+  Epoch 050/1000 | Train Loss: 0.01851 | Val Loss: 0.01930 | Patience: 5/30
+  Epoch 060/1000 | Train Loss: 0.01822 | Val Loss: 0.02083 | Patience: 2/30
+  Epoch 070/1000 | Train Loss: 0.01740 | Val Loss: 0.02068 | Patience: 12/30
+  Epoch 080/1000 | Train Loss: 0.01705 | Val Loss: 0.01821 | Patience: 3/30
+  Epoch 090/1000 | Train Loss: 0.01660 | Val Loss: 0.01896 | Patience: 13/30
+  Epoch 100/1000 | Train Loss: 0.01635 | Val Loss: 0.01932 | Patience: 23/30
+
+  [!] Early stopping at Epoch 107. Best Val Loss: 0.01779
+Saved Full PyTorch Model to: /home/opatel4/offline_models/CNN_Bates_In2_OutBase.pt
+Saved State Dictionary to: /home/opatel4/offline_models/CNN_Bates_In2_OutBase.pth
+
+============================================================
+STARTING EXPERIMENT: CNN_Bergomi_In1_OutBase
+Saving to: /home/opatel4/offline_models
+============================================================
+Targeting 4 Parameters: ['xi', 'nu', 'rho_SV', 'beta']
+Input: 1 Channel (IV Only)
+  Epoch 001/1000 | Train Loss: 0.03142 | Val Loss: 0.02359 | Patience: 0/30
+  Epoch 010/1000 | Train Loss: 0.01547 | Val Loss: 0.01403 | Patience: 0/30
+  Epoch 020/1000 | Train Loss: 0.01357 | Val Loss: 0.01267 | Patience: 0/30
+  Epoch 030/1000 | Train Loss: 0.01259 | Val Loss: 0.01185 | Patience: 1/30
+  Epoch 040/1000 | Train Loss: 0.01175 | Val Loss: 0.01453 | Patience: 3/30
+  Epoch 050/1000 | Train Loss: 0.01125 | Val Loss: 0.01096 | Patience: 8/30
+  Epoch 060/1000 | Train Loss: 0.01008 | Val Loss: 0.01104 | Patience: 2/30
+  Epoch 070/1000 | Train Loss: 0.00960 | Val Loss: 0.00931 | Patience: 0/30
+  Epoch 080/1000 | Train Loss: 0.00945 | Val Loss: 0.00952 | Patience: 7/30
+  Epoch 090/1000 | Train Loss: 0.00888 | Val Loss: 0.00894 | Patience: 4/30
+  Epoch 100/1000 | Train Loss: 0.00886 | Val Loss: 0.00954 | Patience: 14/30
+  Epoch 110/1000 | Train Loss: 0.00871 | Val Loss: 0.00897 | Patience: 24/30
+  Epoch 120/1000 | Train Loss: 0.00872 | Val Loss: 0.00909 | Patience: 4/30
+  Epoch 130/1000 | Train Loss: 0.00871 | Val Loss: 0.00982 | Patience: 5/30
+  Epoch 140/1000 | Train Loss: 0.00871 | Val Loss: 0.00890 | Patience: 7/30
+  Epoch 150/1000 | Train Loss: 0.00858 | Val Loss: 0.00900 | Patience: 4/30
+  Epoch 160/1000 | Train Loss: 0.00855 | Val Loss: 0.00874 | Patience: 14/30
+  Epoch 170/1000 | Train Loss: 0.00847 | Val Loss: 0.00890 | Patience: 24/30
+  Epoch 180/1000 | Train Loss: 0.00853 | Val Loss: 0.00884 | Patience: 4/30
+  Epoch 190/1000 | Train Loss: 0.00855 | Val Loss: 0.00867 | Patience: 14/30
+  Epoch 200/1000 | Train Loss: 0.00857 | Val Loss: 0.00924 | Patience: 24/30
+
+  [!] Early stopping at Epoch 206. Best Val Loss: 0.00857
+Saved Full PyTorch Model to: /home/opatel4/offline_models/CNN_Bergomi_In1_OutBase.pt
+Saved State Dictionary to: /home/opatel4/offline_models/CNN_Bergomi_In1_OutBase.pth
+
+============================================================
+STARTING EXPERIMENT: CNN_Bergomi_In2_OutBase
+Saving to: /home/opatel4/offline_models
+============================================================
+Targeting 4 Parameters: ['xi', 'nu', 'rho_SV', 'beta']
+Input: 2 Channels (IV + Synthetic Sentiment)
+  Epoch 001/1000 | Train Loss: 0.03300 | Val Loss: 0.02268 | Patience: 0/30
+  Epoch 010/1000 | Train Loss: 0.01461 | Val Loss: 0.01540 | Patience: 1/30
+  Epoch 020/1000 | Train Loss: 0.01261 | Val Loss: 0.01201 | Patience: 2/30
+  Epoch 030/1000 | Train Loss: 0.01161 | Val Loss: 0.01107 | Patience: 1/30
+  Epoch 040/1000 | Train Loss: 0.01089 | Val Loss: 0.01069 | Patience: 2/30
+  Epoch 050/1000 | Train Loss: 0.01045 | Val Loss: 0.01025 | Patience: 4/30
+  Epoch 060/1000 | Train Loss: 0.00993 | Val Loss: 0.00971 | Patience: 2/30
+  Epoch 070/1000 | Train Loss: 0.00953 | Val Loss: 0.00959 | Patience: 9/30
+  Epoch 080/1000 | Train Loss: 0.00861 | Val Loss: 0.00911 | Patience: 2/30
+  Epoch 090/1000 | Train Loss: 0.00844 | Val Loss: 0.00856 | Patience: 9/30
+  Epoch 100/1000 | Train Loss: 0.00798 | Val Loss: 0.00921 | Patience: 5/30
+  Epoch 110/1000 | Train Loss: 0.00769 | Val Loss: 0.00836 | Patience: 15/30
+  Epoch 120/1000 | Train Loss: 0.00755 | Val Loss: 0.00794 | Patience: 9/30
+  Epoch 130/1000 | Train Loss: 0.00740 | Val Loss: 0.00748 | Patience: 0/30
+  Epoch 140/1000 | Train Loss: 0.00740 | Val Loss: 0.00774 | Patience: 10/30
+  Epoch 150/1000 | Train Loss: 0.00742 | Val Loss: 0.00770 | Patience: 20/30
+  Epoch 160/1000 | Train Loss: 0.00728 | Val Loss: 0.00828 | Patience: 30/30
+
+  [!] Early stopping at Epoch 160. Best Val Loss: 0.00748
+Saved Full PyTorch Model to: /home/opatel4/offline_models/CNN_Bergomi_In2_OutBase.pt
+Saved State Dictionary to: /home/opatel4/offline_models/CNN_Bergomi_In2_OutBase.pth
+
+============================================================
+STARTING EXPERIMENT: CNN_rBergomi_In1_OutBase
+Saving to: /home/opatel4/offline_models
+============================================================
+Targeting 4 Parameters: ['xi', 'nu', 'rho_SV', 'H']
+Input: 1 Channel (IV Only)
+  Epoch 001/1000 | Train Loss: 0.03228 | Val Loss: 0.02815 | Patience: 0/30
+  Epoch 010/1000 | Train Loss: 0.01745 | Val Loss: 0.01719 | Patience: 1/30
+  Epoch 020/1000 | Train Loss: 0.01504 | Val Loss: 0.01670 | Patience: 1/30
+  Epoch 030/1000 | Train Loss: 0.01370 | Val Loss: 0.01381 | Patience: 1/30
+  Epoch 040/1000 | Train Loss: 0.01291 | Val Loss: 0.01310 | Patience: 0/30
+  Epoch 050/1000 | Train Loss: 0.01208 | Val Loss: 0.01271 | Patience: 6/30
+  Epoch 060/1000 | Train Loss: 0.01175 | Val Loss: 0.01289 | Patience: 7/30
+  Epoch 070/1000 | Train Loss: 0.01132 | Val Loss: 0.01302 | Patience: 1/30
+  Epoch 080/1000 | Train Loss: 0.01098 | Val Loss: 0.01312 | Patience: 4/30
+  Epoch 090/1000 | Train Loss: 0.00992 | Val Loss: 0.01128 | Patience: 0/30
+  Epoch 100/1000 | Train Loss: 0.00963 | Val Loss: 0.01091 | Patience: 0/30
+  Epoch 110/1000 | Train Loss: 0.00950 | Val Loss: 0.01104 | Patience: 10/30
+  Epoch 120/1000 | Train Loss: 0.00897 | Val Loss: 0.01085 | Patience: 5/30
+  Epoch 130/1000 | Train Loss: 0.00863 | Val Loss: 0.01045 | Patience: 0/30
+  Epoch 140/1000 | Train Loss: 0.00874 | Val Loss: 0.01060 | Patience: 2/30
+  Epoch 150/1000 | Train Loss: 0.00846 | Val Loss: 0.01069 | Patience: 12/30
+  Epoch 160/1000 | Train Loss: 0.00840 | Val Loss: 0.01045 | Patience: 22/30
+
+  [!] Early stopping at Epoch 168. Best Val Loss: 0.01032
+Saved Full PyTorch Model to: /home/opatel4/offline_models/CNN_rBergomi_In1_OutBase.pt
+Saved State Dictionary to: /home/opatel4/offline_models/CNN_rBergomi_In1_OutBase.pth
+
+============================================================
+STARTING EXPERIMENT: CNN_rBergomi_In2_OutBase
+Saving to: /home/opatel4/offline_models
+============================================================
+Targeting 4 Parameters: ['xi', 'nu', 'rho_SV', 'H']
+Input: 2 Channels (IV + Synthetic Sentiment)
+  Epoch 001/1000 | Train Loss: 0.02688 | Val Loss: 0.02035 | Patience: 0/30
+  Epoch 010/1000 | Train Loss: 0.01257 | Val Loss: 0.01229 | Patience: 0/30
+  Epoch 020/1000 | Train Loss: 0.01085 | Val Loss: 0.01090 | Patience: 1/30
+  Epoch 030/1000 | Train Loss: 0.00980 | Val Loss: 0.00933 | Patience: 0/30
+  Epoch 040/1000 | Train Loss: 0.00914 | Val Loss: 0.00900 | Patience: 2/30
+  Epoch 050/1000 | Train Loss: 0.00864 | Val Loss: 0.00967 | Patience: 5/30
+  Epoch 060/1000 | Train Loss: 0.00826 | Val Loss: 0.00853 | Patience: 3/30
+  Epoch 070/1000 | Train Loss: 0.00744 | Val Loss: 0.00782 | Patience: 1/30
+  Epoch 080/1000 | Train Loss: 0.00713 | Val Loss: 0.00774 | Patience: 7/30
+  Epoch 090/1000 | Train Loss: 0.00694 | Val Loss: 0.00764 | Patience: 2/30
+  Epoch 100/1000 | Train Loss: 0.00685 | Val Loss: 0.00763 | Patience: 6/30
+  Epoch 110/1000 | Train Loss: 0.00640 | Val Loss: 0.00734 | Patience: 2/30
+  Epoch 120/1000 | Train Loss: 0.00613 | Val Loss: 0.00731 | Patience: 12/30
+  Epoch 130/1000 | Train Loss: 0.00607 | Val Loss: 0.00766 | Patience: 3/30
+  Epoch 140/1000 | Train Loss: 0.00605 | Val Loss: 0.00715 | Patience: 6/30
+  Epoch 150/1000 | Train Loss: 0.00597 | Val Loss: 0.00698 | Patience: 0/30
+  Epoch 160/1000 | Train Loss: 0.00599 | Val Loss: 0.00788 | Patience: 4/30
+  Epoch 170/1000 | Train Loss: 0.00580 | Val Loss: 0.00707 | Patience: 2/30
+  Epoch 180/1000 | Train Loss: 0.00575 | Val Loss: 0.00704 | Patience: 12/30
+  Epoch 190/1000 | Train Loss: 0.00577 | Val Loss: 0.00703 | Patience: 4/30
+  Epoch 200/1000 | Train Loss: 0.00573 | Val Loss: 0.00710 | Patience: 1/30
+  Epoch 210/1000 | Train Loss: 0.00572 | Val Loss: 0.00693 | Patience: 11/30
+  Epoch 220/1000 | Train Loss: 0.00566 | Val Loss: 0.00729 | Patience: 21/30
+
+  [!] Early stopping at Epoch 229. Best Val Loss: 0.00684
+Saved Full PyTorch Model to: /home/opatel4/offline_models/CNN_rBergomi_In2_OutBase.pt
+Saved State Dictionary to: /home/opatel4/offline_models/CNN_rBergomi_In2_OutBase.pth
