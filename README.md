@@ -9,9 +9,9 @@ one-time model inference (marked **[EXTERNAL]** below); everything downstream of
 them is fully scripted.
 
 The pipeline has two stages, mirroring the paper: an **offline** stage
-(`src/generate_offline_data.py`, `src/pretrain_offline.py`) that generates
+(`offline/generate_offline_data.py`, `offline/pretrain_offline.py`) that generates
 synthetic surfaces and pre-trains the CNN, and an **online** stage
-(`src/fine_tuning/`) that fine-tunes against real SPX surfaces and evaluates.
+(`online/`) that fine-tunes against real SPX surfaces and evaluates.
 
 ---
 
@@ -124,7 +124,7 @@ Everything except these two steps is scripted and deterministic.
    `data/README.md` documents the expected schema. With equivalent data in that
    schema, the pipeline runs unchanged.
 
-2. **FinBERT scoring** (`src/sentiment/finbert_scoring.py`) runs the pretrained
+2. **FinBERT scoring** (`sentiment/finbert_scoring.py`) runs the pretrained
    FinBERT model over article text to produce the daily sentiment index. This is
    one-time inference; `data/spx_returns_sentiment_merged.csv` contains the
    scored output so reviewers without the raw news can reproduce everything
@@ -142,7 +142,7 @@ correctly — prefer them over invoking the Python entry points by hand.
 
 ### Step 0 — sentiment regression (Table 1)
 ```bash
-python src/sentiment/regression_sentiment.py
+python sentiment/regression_sentiment.py
 # R^2 = 0.508, n = 3774; reproduces Table 1
 ```
 
@@ -181,9 +181,9 @@ bash scripts/05_walkforward.sh
 ### Step 6 — hedging, identification, no-arbitrage (Sec 6.4-6.6)
 ```bash
 bash scripts/06_hedging.sh
-export PYTHONPATH="$PWD/src/fine_tuning"
-python src/fine_tuning/param_identification.py
-python src/fine_tuning/calendar_diagnostic.py
+export PYTHONPATH="$PWD/online"
+python online/param_identification.py
+python online/calendar_diagnostic.py
 ```
 
 ### Step 7 — figures
@@ -221,7 +221,7 @@ defects (documented in Appendix A of the paper): a martingale drift error, naive
 variance clamping, catastrophic cancellation in the quadrature weights, a
 sentiment channel written along the wrong array axis, a mismatched strike grid,
 and superseded regression coefficients. The corrections are baked into
-`src/generate_offline_data.py`.
+`offline/generate_offline_data.py`.
 
 Do **not** regenerate synthetic data from any older notebook; those lack the
 fixes and reproduce the earlier, misleading result. Several of these defects are

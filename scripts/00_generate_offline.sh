@@ -12,6 +12,6 @@ mkdir -p "$OUTDIR"
 for M in Heston Bates Bergomi rBergomi; do
   echo "=== generating $M  $(date) ==="
   SDP_MODEL=$M SDP_OUTDIR="$OUTDIR" \
-    python3 src/generate_offline_data.py
+    python3 offline/generate_offline_data.py
 done
 echo "Stage 00 complete. Verify inversion-floor rate 0.2–0.7% per family above."

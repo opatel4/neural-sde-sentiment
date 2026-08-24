@@ -17,7 +17,7 @@ echo "=================================================================="
 
 echo
 echo "--- 1. STRUCTURE -------------------------------------------------"
-for d in src src/fine_tuning src/sentiment data scripts results figures paper; do
+for d in offline online sentiment data scripts results figures paper; do
   [ -d "$d" ] && ok "dir $d" || bad "dir $d MISSING"
 done
 for f in README.md requirements.txt .gitignore data/README.md paper/neural_sde_sentiment_paper.md; do
@@ -26,15 +26,15 @@ done
 
 echo
 echo "--- 2. CODE COMPLETENESS -----------------------------------------"
-n=$(find src -name "*.py" | wc -l | tr -d ' ')
+n=$(find offline online sentiment -name "*.py" | wc -l | tr -d ' ')
 [ "$n" -ge 16 ] && ok "src has $n .py files (>=16)" || bad "src has only $n .py files"
-for f in src/generate_offline_data.py src/pretrain_offline.py \
-         src/sentiment/regression_sentiment.py src/fine_tuning/config.py \
-         src/fine_tuning/train.py src/fine_tuning/trainer.py \
-         src/fine_tuning/data_utils.py src/fine_tuning/in2_adapter.py \
-         src/fine_tuning/walkforward.py src/fine_tuning/evaluate.py \
-         src/fine_tuning/export_surfaces.py src/fine_tuning/compare_variants.py \
-         src/fine_tuning/compare_variants_wf.py src/fine_tuning/run_hedging.py; do
+for f in offline/generate_offline_data.py offline/pretrain_offline.py \
+         sentiment/regression_sentiment.py online/config.py \
+         online/train.py online/trainer.py \
+         online/data_utils.py online/in2_adapter.py \
+         online/walkforward.py online/evaluate.py \
+         online/export_surfaces.py online/compare_variants.py \
+         online/compare_variants_wf.py online/run_hedging.py; do
   has "$f" && ok "$(basename $f)" || bad "$f MISSING"
 done
 n=$(ls scripts/0[0-6]_*.sh 2>/dev/null | wc -l | tr -d ' ')
@@ -43,46 +43,46 @@ n=$(ls scripts/0[0-6]_*.sh 2>/dev/null | wc -l | tr -d ' ')
 echo
 echo "--- 3. NOT STALE: corrected constants ----------------------------"
 # in2_adapter: corrected offline sentiment moments
-if grep -q "SENT_OFFLINE_MEAN *= *-0.0296" src/fine_tuning/in2_adapter.py 2>/dev/null; then
+if grep -q "SENT_OFFLINE_MEAN *= *-0.0296" online/in2_adapter.py 2>/dev/null; then
   ok "in2_adapter SENT_OFFLINE_MEAN = -0.0296 (corrected)"
 else
-  bad "in2_adapter SENT_OFFLINE_MEAN is NOT -0.0296 -> STALE"; grep -n "SENT_OFFLINE_MEAN" src/fine_tuning/in2_adapter.py 2>/dev/null | head -2
+  bad "in2_adapter SENT_OFFLINE_MEAN is NOT -0.0296 -> STALE"; grep -n "SENT_OFFLINE_MEAN" online/in2_adapter.py 2>/dev/null | head -2
 fi
-if grep -q "SENT_OFFLINE_STD *= *0.0927" src/fine_tuning/in2_adapter.py 2>/dev/null; then
+if grep -q "SENT_OFFLINE_STD *= *0.0927" online/in2_adapter.py 2>/dev/null; then
   ok "in2_adapter SENT_OFFLINE_STD = 0.0927 (corrected)"
 else
-  bad "in2_adapter SENT_OFFLINE_STD is NOT 0.0927 -> STALE"; grep -n "SENT_OFFLINE_STD" src/fine_tuning/in2_adapter.py 2>/dev/null | head -2
+  bad "in2_adapter SENT_OFFLINE_STD is NOT 0.0927 -> STALE"; grep -n "SENT_OFFLINE_STD" online/in2_adapter.py 2>/dev/null | head -2
 fi
 # trainer: relaxed early stopping
-grep -q "max_increase_streak *= *30" src/fine_tuning/trainer.py 2>/dev/null \
+grep -q "max_increase_streak *= *30" online/trainer.py 2>/dev/null \
   && ok "trainer max_increase_streak = 30 (fixed)" \
   || bad "trainer max_increase_streak != 30 -> STALE early-stop rule"
-grep -q "early_stop_arm_epoch *= *20" src/fine_tuning/trainer.py 2>/dev/null \
+grep -q "early_stop_arm_epoch *= *20" online/trainer.py 2>/dev/null \
   && ok "trainer early_stop_arm_epoch = 20 (fixed)" \
   || bad "trainer early_stop_arm_epoch != 20 -> STALE"
 # config: no per-model offline weight override
-if grep -qE "OFFLINE_WEIGHT_BY_MODEL *= *\{\s*\}" src/fine_tuning/config.py 2>/dev/null; then
+if grep -qE "OFFLINE_WEIGHT_BY_MODEL *= *\{\s*\}" online/config.py 2>/dev/null; then
   ok "config OFFLINE_WEIGHT_BY_MODEL = {} (override removed)"
 else
-  wrn "config OFFLINE_WEIGHT_BY_MODEL not empty — check:"; grep -n "OFFLINE_WEIGHT_BY_MODEL" src/fine_tuning/config.py 2>/dev/null | head -2
+  wrn "config OFFLINE_WEIGHT_BY_MODEL not empty — check:"; grep -n "OFFLINE_WEIGHT_BY_MODEL" online/config.py 2>/dev/null | head -2
 fi
 # data_utils: forward-mode price-cap gate reads the env var
-grep -q 'SDP_NORM' src/fine_tuning/data_utils.py 2>/dev/null \
+grep -q 'SDP_NORM' online/data_utils.py 2>/dev/null \
   && ok "data_utils gates the price cap on SDP_NORM" \
   || bad "data_utils has NO SDP_NORM gate -> price cap always on"
 # walkforward: per-regime sentiment standardisation
-grep -q "set_sent_regime" src/fine_tuning/walkforward.py 2>/dev/null \
+grep -q "set_sent_regime" online/walkforward.py 2>/dev/null \
   && ok "walkforward calls set_sent_regime (patched)" \
   || bad "walkforward MISSING set_sent_regime -> wrong sentiment scaling OOS"
 for f in evaluate export_surfaces train; do
-  grep -q "set_sent_regime" src/fine_tuning/$f.py 2>/dev/null \
+  grep -q "set_sent_regime" online/$f.py 2>/dev/null \
     && ok "$f.py calls set_sent_regime" \
     || wrn "$f.py has no set_sent_regime — verify by hand"
 done
 
 echo
 echo "--- 4. NOT STALE: generator coefficients -------------------------"
-G=src/generate_offline_data.py
+G=offline/generate_offline_data.py
 if grep -qE "0\.6855|0\.68555|0\.6856" $G 2>/dev/null; then
   ok "generator has corrected y_lag1 coefficient (~0.6856)"
 else
@@ -172,7 +172,7 @@ echo "        repo size: $(du -sh . 2>/dev/null | cut -f1)"
 
 echo
 echo "--- 10. KNOWN OPEN ITEMS -----------------------------------------"
-has src/sentiment/finbert_scoring.py && ok "finbert_scoring.py present" \
+has sentiment/finbert_scoring.py && ok "finbert_scoring.py present" \
   || wrn "finbert_scoring.py MISSING — README references it (ask Sam / add stub)"
 
 echo
@@ -183,7 +183,7 @@ echo "=================================================================="
 
 echo
 echo "--- 11. IMPORTS RESOLVE ------------------------------------------"
-( cd src/fine_tuning && python3 -c "
+( cd online && python3 -c "
 import ast, os, sys
 local = {f[:-3] for f in os.listdir('.') if f.endswith('.py')}
 std = getattr(sys, 'stdlib_module_names', set())

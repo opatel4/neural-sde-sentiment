@@ -4,12 +4,12 @@
 # Then the OOS comparison. Produces eval_wf_surfaces/analysis/results_master.csv (16 rows).
 set -euo pipefail
 cd "$(dirname "$0")/.."
-export PYTHONPATH="$PWD/src/fine_tuning"
+export PYTHONPATH="$PWD/online"
 export SDP_NORM=forward SDP_USE_IN2=1 SDP_Q=0.015
 
 run_cell () {  # model arm regime rate
   SDP_USE_SENTIMENT=$2 SDP_R=$4 \
-    python3 src/fine_tuning/walkforward.py --models "$1" --regimes "$3" --epochs 20 \
+    python3 online/walkforward.py --models "$1" --regimes "$3" --epochs 20 \
     >> "$HOME/wf_${1}_${3}_${2}.log" 2>&1
 }
 
@@ -29,5 +29,5 @@ worker Bergomi &
 worker rBergomi &
 wait
 
-python3 src/fine_tuning/compare_variants_wf.py
+python3 online/compare_variants_wf.py
 echo "Stage 05 complete. Verify OOS results_master.csv has 16 data rows."

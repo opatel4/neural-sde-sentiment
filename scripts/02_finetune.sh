@@ -7,12 +7,12 @@
 # omitting it silently corrupts ~20% of inversions. See README §3.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-export PYTHONPATH="$PWD/src/fine_tuning"
+export PYTHONPATH="$PWD/online"
 export SDP_USE_IN2=1 SDP_NORM=forward SDP_Q=0.015
 
 run_cell () {  # regime rate arm
   SDP_USE_SENTIMENT=$3 SDP_R=$2 \
-    python3 src/fine_tuning/train.py --date-ranges "$1" >> "$HOME/ft_${1}_${3}.log" 2>&1
+    python3 online/train.py --date-ranges "$1" >> "$HOME/ft_${1}_${3}.log" 2>&1
 }
 
 worker () {  # regime rate  -> runs both arms sequentially

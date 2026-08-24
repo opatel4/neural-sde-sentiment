@@ -4,6 +4,6 @@
 # Do NOT interrupt — the DM/GW bootstrap looks idle under buffered stdout but is working.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-export PYTHONPATH="$PWD/src/fine_tuning"
-python3 src/fine_tuning/compare_variants.py
+export PYTHONPATH="$PWD/online"
+python3 online/compare_variants.py
 echo "Stage 04 complete. Verify results_master.csv has 16 data rows."

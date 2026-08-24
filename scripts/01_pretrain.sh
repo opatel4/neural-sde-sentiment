@@ -8,5 +8,5 @@ cd "$(dirname "$0")/.."
 SDP_DATA_DIR=${SDP_DATA_DIR:-data/offline_surfaces} \
 SDP_WEIGHTS_DIR=${SDP_WEIGHTS_DIR:-results/offline_models} \
 SDP_SENTIMENT=both \
-  python3 src/pretrain_offline.py
+  python3 offline/pretrain_offline.py
 echo "Stage 01 complete. Expect 8 checkpoints in results/offline_models/."
