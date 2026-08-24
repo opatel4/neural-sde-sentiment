@@ -73,6 +73,8 @@ synthetic surfaces and pre-trains the CNN, and an **online** stage
 │   ├── in_sample/analysis/        <- 16-cell results_master.csv + per-cell JSON
 │   ├── walkforward/analysis/      <- 16-cell OOS results_master.csv + JSON
 │   ├── hedging_all.log            <- delta-hedged P&L, 16 cells
+│   ├── logs/                      <- evidence: train_offline_v3.log (Table 2),
+│   │                                 calendar_diag.log (6.5), param_id.log (6.6)
 │   └── tanh_sentiment_regression_fitted_values.csv
 │
 ├── figures/
