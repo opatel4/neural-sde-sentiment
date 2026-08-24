@@ -43,7 +43,7 @@ them is fully scripted.
 │   ├── in2_adapter.py             <- sentiment channel + per-regime standardisation
 │   ├── trainer.py                 <- fine-tuning loop, early-stopping rule
 │   ├── train.py                   <- fine-tune driver
-│   ├── run_parallel.sh            <- 4-worker fine-tuning launcher
+│   ├── scripts/02_finetune.sh       <- 4-worker fine-tuning launcher
 │   ├── evaluate.py                <- in-sample evaluation
 │   ├── export_surfaces.py         <- dump per-day predicted surfaces to npz
 │   ├── walkforward.py             <- expanding-window OOS evaluation
@@ -129,7 +129,7 @@ SDP_DATA_DIR=./surfaces SDP_WEIGHTS_DIR=./models SDP_SENTIMENT=both \
 ### Step 3 - online fine-tuning  (32 cells)
 ```bash
 cd online
-SDP_NORM=forward SDP_USE_IN2=1 SDP_Q=0.015 ./run_parallel.sh
+SDP_NORM=forward SDP_USE_IN2=1 SDP_Q=0.015 bash scripts/02_finetune.sh
 # 4 models x 4 regimes x 2 arms; per-regime SDP_R set inside the launcher
 # ~4-5 h on 4 workers. Produces 32 checkpoints.
 ```
@@ -147,7 +147,7 @@ python compare_variants.py     # Table 3 + persistence benchmark (Table 5)
 ### Step 5 - walk-forward  (Table 4)
 ```bash
 # both arms x 4 models x 4 regimes, expanding-window OOS
-# (see online/run_walkforward.sh for the 4-worker launcher)
+# (see scripts/05_walkforward.sh for the 4-worker launcher)
 python compare_variants_wf.py  # Table 4
 ```
 
