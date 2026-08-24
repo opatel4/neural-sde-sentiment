@@ -1,0 +1,21 @@
+# Neural-SDE sentiment pipeline — pinned to the environment that produced the
+# published results (single NVIDIA H100, driver 580.126.09, Python 3.10.12).
+#
+# Install into a fresh venv:
+#   python3 -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+#
+# torch is pinned to the CUDA 12.8 build. On a different CUDA version install the
+# matching torch wheel from https://pytorch.org first, then the rest.
+
+torch==2.10.0
+numpy==2.2.6
+pandas==2.3.3
+scipy==1.15.3
+matplotlib==3.10.9
+
+# The sentiment regression (src/sentiment/regression_sentiment.py) uses only
+# numpy least-squares; no statsmodels/scikit-learn dependency. FinBERT scoring
+# (src/sentiment/finbert_scoring.py) additionally needs transformers + a BERT
+# checkpoint; that step is external (see README §5) and its requirements are
+# listed in src/sentiment/requirements_finbert.txt.

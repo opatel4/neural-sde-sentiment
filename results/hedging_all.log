@@ -1,0 +1,80 @@
+=== Heston 2010-2012 (r=0.0254) 13:59 ===
+Heston 2010-2012: hedging 744 days (paths=20000, stride=1) ...
+  no sentiment : var=4.008e-05  std=6.331e-03  n=743
+  sentiment    : var=3.955e-05  std=6.289e-03  n=743
+  -> lower hedging-error variance: sentiment
+=== Heston 2013-2015 (r=0.0230) 14:06 ===
+Heston 2013-2015: hedging 727 days (paths=20000, stride=1) ...
+  no sentiment : var=1.200e-04  std=1.095e-02  n=726
+  sentiment    : var=1.230e-04  std=1.109e-02  n=726
+  -> lower hedging-error variance: no sentiment
+=== Heston 2016-2019 (r=0.0236) 14:13 ===
+Heston 2016-2019: hedging 995 days (paths=20000, stride=1) ...
+  no sentiment : var=8.330e-05  std=9.127e-03  n=994
+  sentiment    : var=7.872e-05  std=8.872e-03  n=994
+  -> lower hedging-error variance: sentiment
+=== Heston 2020-2022 (r=0.0169) 14:23 ===
+Heston 2020-2022: hedging 749 days (paths=20000, stride=1) ...
+  no sentiment : var=1.751e-05  std=4.185e-03  n=748
+  sentiment    : var=1.533e-05  std=3.916e-03  n=748
+  -> lower hedging-error variance: sentiment
+=== Bates 2010-2012 (r=0.0254) 14:30 ===
+Bates 2010-2012: hedging 744 days (paths=20000, stride=1) ...
+  no sentiment : var=8.254e-05  std=9.085e-03  n=743
+  sentiment    : var=8.220e-05  std=9.066e-03  n=743
+  -> lower hedging-error variance: sentiment
+=== Bates 2013-2015 (r=0.0230) 14:40 ===
+Bates 2013-2015: hedging 727 days (paths=20000, stride=1) ...
+  no sentiment : var=1.539e-04  std=1.240e-02  n=726
+  sentiment    : var=1.522e-04  std=1.234e-02  n=726
+  -> lower hedging-error variance: sentiment
+=== Bates 2016-2019 (r=0.0236) 14:50 ===
+Bates 2016-2019: hedging 995 days (paths=20000, stride=1) ...
+  no sentiment : var=1.038e-04  std=1.019e-02  n=994
+  sentiment    : var=1.044e-04  std=1.022e-02  n=994
+  -> lower hedging-error variance: no sentiment
+=== Bates 2020-2022 (r=0.0169) 15:04 ===
+Bates 2020-2022: hedging 749 days (paths=20000, stride=1) ...
+  no sentiment : var=2.243e-05  std=4.736e-03  n=748
+  sentiment    : var=2.098e-05  std=4.581e-03  n=748
+  -> lower hedging-error variance: sentiment
+=== Bergomi 2010-2012 (r=0.0254) 15:15 ===
+Bergomi 2010-2012: hedging 744 days (paths=20000, stride=1) ...
+  no sentiment : var=3.457e-05  std=5.880e-03  n=743
+  sentiment    : var=3.542e-05  std=5.952e-03  n=743
+  -> lower hedging-error variance: no sentiment
+=== Bergomi 2013-2015 (r=0.0230) 15:21 ===
+Bergomi 2013-2015: hedging 727 days (paths=20000, stride=1) ...
+  no sentiment : var=9.563e-05  std=9.779e-03  n=726
+  sentiment    : var=8.932e-05  std=9.451e-03  n=726
+  -> lower hedging-error variance: sentiment
+=== Bergomi 2016-2019 (r=0.0236) 15:28 ===
+Bergomi 2016-2019: hedging 995 days (paths=20000, stride=1) ...
+  no sentiment : var=3.359e-05  std=5.796e-03  n=994
+  sentiment    : var=3.201e-05  std=5.658e-03  n=994
+  -> lower hedging-error variance: sentiment
+=== Bergomi 2020-2022 (r=0.0169) 15:36 ===
+Bergomi 2020-2022: hedging 749 days (paths=20000, stride=1) ...
+  no sentiment : var=1.531e-05  std=3.913e-03  n=748
+  sentiment    : var=1.548e-05  std=3.934e-03  n=748
+  -> lower hedging-error variance: no sentiment
+=== rBergomi 2010-2012 (r=0.0254) 15:44 ===
+rBergomi 2010-2012: hedging 744 days (paths=20000, stride=1) ...
+  no sentiment : var=4.386e-05  std=6.623e-03  n=743
+  sentiment    : var=4.863e-05  std=6.973e-03  n=743
+  -> lower hedging-error variance: no sentiment
+=== rBergomi 2013-2015 (r=0.0230) 15:50 ===
+rBergomi 2013-2015: hedging 727 days (paths=20000, stride=1) ...
+  no sentiment : var=7.001e-05  std=8.367e-03  n=726
+  sentiment    : var=7.020e-05  std=8.378e-03  n=726
+  -> lower hedging-error variance: no sentiment
+=== rBergomi 2016-2019 (r=0.0236) 15:57 ===
+rBergomi 2016-2019: hedging 995 days (paths=20000, stride=1) ...
+  no sentiment : var=4.316e-05  std=6.570e-03  n=994
+  sentiment    : var=4.041e-05  std=6.357e-03  n=994
+  -> lower hedging-error variance: sentiment
+=== rBergomi 2020-2022 (r=0.0169) 16:05 ===
+rBergomi 2020-2022: hedging 749 days (paths=20000, stride=1) ...
+  no sentiment : var=1.107e-05  std=3.328e-03  n=748
+  sentiment    : var=9.322e-06  std=3.053e-03  n=748
+  -> lower hedging-error variance: sentiment

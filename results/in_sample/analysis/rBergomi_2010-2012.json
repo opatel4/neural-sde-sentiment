@@ -1,0 +1,140 @@
+{
+  "model": "rBergomi",
+  "date_range": "2010-2012",
+  "n_days": 744,
+  "primary": {
+    "vw_iv_rmse_ns": 0.06063988374598157,
+    "vw_iv_rmse_s": 0.060016994821590564
+  },
+  "supporting_ns": {
+    "iv_mae": 0.05989603607323639,
+    "iv_rmse": 0.0790977749439204,
+    "px_mae": 0.026754537597298622,
+    "px_rmse": 0.051579270511865616
+  },
+  "supporting_s": {
+    "iv_mae": 0.06192174325399821,
+    "iv_rmse": 0.08303055778758363,
+    "px_mae": 0.026663418859243393,
+    "px_rmse": 0.051304351538419724
+  },
+  "coverage": {
+    "inversion_success_ns": 0.8805290811339198,
+    "inversion_success_s": 0.8794904692082112,
+    "common_coverage": 0.8701582355816226,
+    "n_points_total": 65472,
+    "n_points_common": 56971,
+    "valid_points_per_day_mean": 76.5739247311828,
+    "valid_points_per_day_min": 56,
+    "days_with_zero_valid": 0
+  },
+  "clark_west": {
+    "cw_mean": 0.000575112943493264,
+    "cw_t": 2.5806035723176253,
+    "cw_p_one_sided": 0.00493138830965123,
+    "nw_lags": 6
+  },
+  "diebold_mariano": {
+    "dm_mean": 0.0001074050537929236,
+    "dm_t": 0.8081163250962803,
+    "dm_p_two_sided": 0.41902362059873854,
+    "nw_lags": 6,
+    "favours": "sentiment"
+  },
+  "arbitrage_ns": {
+    "calendar_viol_rate": 0.13088337656770282,
+    "butterfly_viol_rate": 1.8667861409796893e-05
+  },
+  "arbitrage_s": {
+    "calendar_viol_rate": 0.1269063341225942,
+    "butterfly_viol_rate": 1.8667861409796893e-05
+  },
+  "benchmarks": {
+    "previous_day": 0.02767569176072058,
+    "atm_flat": 0.05022736088586451,
+    "cnn_no_sent": 0.06122370138860623,
+    "cnn_sentiment": 0.060658029560232876
+  },
+  "param_turnover_ns": {
+    "std_of_daily_change": [
+      0.025186555460095406,
+      0.9170393347740173,
+      0.42739927768707275,
+      0.17051929235458374
+    ],
+    "mean_abs_change": [
+      0.01919141784310341,
+      0.675219714641571,
+      0.32559987902641296,
+      0.1334376484155655
+    ],
+    "param_names": [
+      "xi",
+      "nu",
+      "rho",
+      "H"
+    ]
+  },
+  "param_turnover_s": {
+    "std_of_daily_change": [
+      0.02535904571413994,
+      0.9238983392715454,
+      0.48521652817726135,
+      0.17139415442943573
+    ],
+    "mean_abs_change": [
+      0.01941412314772606,
+      0.6769177913665771,
+      0.37067657709121704,
+      0.1336575299501419
+    ],
+    "param_names": [
+      "xi",
+      "nu",
+      "rho",
+      "H"
+    ]
+  },
+  "conditional_buckets": {
+    "by_sentiment_magnitude": {
+      "low": {
+        "n": 248,
+        "mean_diff": 0.0005220338792677766,
+        "t": 1.634176969122366
+      },
+      "mid": {
+        "n": 247,
+        "mean_diff": -0.0002139134025571921,
+        "t": -1.0040868226639639
+      },
+      "high": {
+        "n": 248,
+        "mean_diff": 1.0354080733926723e-05,
+        "t": 0.17399874743116323
+      }
+    },
+    "by_news_volume": {
+      "low": {
+        "n": 245,
+        "mean_diff": -0.0002727698389408184,
+        "t": -1.2657812377055695
+      },
+      "mid": {
+        "n": 248,
+        "mean_diff": 0.0001594052631011509,
+        "t": 2.0937588789804167
+      },
+      "high": {
+        "n": 250,
+        "mean_diff": 0.00042596683576084416,
+        "t": 1.3647016921604855
+      }
+    }
+  },
+  "giacomini_white": {
+    "gw_stat": 5.117194989044373,
+    "gw_dof": 3,
+    "gw_p": 0.16341396373397987,
+    "mean_diff_favouring_sentiment": 0.00010658896857173076
+  }
+}

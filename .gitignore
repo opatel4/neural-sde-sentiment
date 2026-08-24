@@ -1,0 +1,10 @@
+# licensed data — never commit
+data/SPX_Data/
+*.parquet
+# large binaries — distribute via release/LFS, not git
+*.pth
+*.npz
+# scratch
+__pycache__/
+*.pyc
+.venv/
