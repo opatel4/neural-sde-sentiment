@@ -17,7 +17,7 @@ echo "=================================================================="
 
 echo
 echo "--- 1. STRUCTURE -------------------------------------------------"
-for d in config src src/fine_tuning src/sentiment data scripts results figures paper; do
+for d in src src/fine_tuning src/sentiment data scripts results figures paper; do
   [ -d "$d" ] && ok "dir $d" || bad "dir $d MISSING"
 done
 for f in README.md requirements.txt .gitignore data/README.md paper/neural_sde_sentiment_paper.md; do
@@ -29,7 +29,7 @@ echo "--- 2. CODE COMPLETENESS -----------------------------------------"
 n=$(find src -name "*.py" | wc -l | tr -d ' ')
 [ "$n" -ge 16 ] && ok "src has $n .py files (>=16)" || bad "src has only $n .py files"
 for f in src/generate_offline_data.py src/pretrain_offline.py \
-         src/sentiment/regression_sentiment.py config/config.py \
+         src/sentiment/regression_sentiment.py src/fine_tuning/config.py \
          src/fine_tuning/train.py src/fine_tuning/trainer.py \
          src/fine_tuning/data_utils.py src/fine_tuning/in2_adapter.py \
          src/fine_tuning/walkforward.py src/fine_tuning/evaluate.py \
@@ -61,10 +61,10 @@ grep -q "early_stop_arm_epoch *= *20" src/fine_tuning/trainer.py 2>/dev/null \
   && ok "trainer early_stop_arm_epoch = 20 (fixed)" \
   || bad "trainer early_stop_arm_epoch != 20 -> STALE"
 # config: no per-model offline weight override
-if grep -qE "OFFLINE_WEIGHT_BY_MODEL *= *\{\s*\}" config/config.py 2>/dev/null; then
+if grep -qE "OFFLINE_WEIGHT_BY_MODEL *= *\{\s*\}" src/fine_tuning/config.py 2>/dev/null; then
   ok "config OFFLINE_WEIGHT_BY_MODEL = {} (override removed)"
 else
-  wrn "config OFFLINE_WEIGHT_BY_MODEL not empty — check:"; grep -n "OFFLINE_WEIGHT_BY_MODEL" config/config.py 2>/dev/null | head -2
+  wrn "config OFFLINE_WEIGHT_BY_MODEL not empty — check:"; grep -n "OFFLINE_WEIGHT_BY_MODEL" src/fine_tuning/config.py 2>/dev/null | head -2
 fi
 # data_utils: forward-mode price-cap gate reads the env var
 grep -q 'SDP_NORM' src/fine_tuning/data_utils.py 2>/dev/null \
@@ -180,3 +180,27 @@ echo "=================================================================="
 printf " PASS %d   WARN %d   FAIL %d\n" $pass $warn $fail
 echo "=================================================================="
 [ "$fail" -eq 0 ] && echo " No blocking failures." || echo " Fix the FAIL items before pushing."
+
+echo
+echo "--- 11. IMPORTS RESOLVE ------------------------------------------"
+( cd src/fine_tuning && python3 -c "
+import ast, os, sys
+local = {f[:-3] for f in os.listdir('.') if f.endswith('.py')}
+std = getattr(sys, 'stdlib_module_names', set())
+third = {'numpy','pandas','torch','scipy','matplotlib','tqdm','sklearn'}
+missing = set()
+for f in sorted(os.listdir('.')):
+    if not f.endswith('.py'): continue
+    try: tree = ast.parse(open(f, errors='ignore').read())
+    except SyntaxError: continue
+    for n in ast.walk(tree):
+        mods = []
+        if isinstance(n, ast.ImportFrom) and n.level == 0 and n.module:
+            mods = [n.module.split('.')[0]]
+        elif isinstance(n, ast.Import):
+            mods = [a.name.split('.')[0] for a in n.names]
+        for m in mods:
+            if m not in local and m not in std and m not in third:
+                missing.add((f, m))
+print('  FAIL  unresolved:', sorted(missing)) if missing else print('  PASS  all local imports resolve')
+" )
