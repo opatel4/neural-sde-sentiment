@@ -8,3 +8,12 @@ data/SPX_Data/
 __pycache__/
 *.pyc
 .venv/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
