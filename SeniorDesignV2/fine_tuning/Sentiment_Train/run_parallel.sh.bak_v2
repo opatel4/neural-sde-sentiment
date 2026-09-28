@@ -1,0 +1,118 @@
+#!/bin/bash
+# =====================================================================
+# run_parallel.sh - fine-tune all 32 cells using 3 concurrent workers
+#
+#   32 cells = 4 models x 4 regimes x 2 arms
+#     arm 1 = In2 with real sentiment channel
+#     arm 0 = In2 with constant channel (baseline; identical architecture)
+#
+# WHY 3 WORKERS
+#   One cell used ~17.7 GB of the 94 GB H100 and left the GPU ~24% busy,
+#   so the bottleneck is per-batch Python overhead, not compute. Running
+#   3 processes fills those idle gaps.
+#     3 x 17.7 GB = ~53 GB   comfortable
+#     4 x 17.7 GB = ~71 GB   fits, thinner margin
+#   Memory is what actually adds up; utilization % does not.
+#
+# WHY SPLIT BY REGIME
+#   Each worker owns whole regimes, so no two processes ever write the
+#   same output directory. Nothing is shared but the GPU, so the maths
+#   each process does is identical to running it alone - results are
+#   unaffected.
+#
+# EXPECT
+#   Each cell slows from ~71 min to maybe ~90-100 min under contention,
+#   but 3 run at once, so total drops from ~38 h to roughly 13-16 h.
+#
+# USAGE
+#   chmod +x run_parallel.sh
+#   nohup ./run_parallel.sh > ~/finetune_master.log 2>&1 &
+#   tail -f ~/worker1.log        # per-worker logs keep the bars readable
+# =====================================================================
+
+cd "$(dirname "$0")" || exit 1
+
+export SDP_USE_IN2=1
+export SDP_Q=0.015
+
+# per-regime risk-free rate (measured from the CSVs; 2020 post-repair)
+rate_for() {
+  case "$1" in
+    2010-2012) echo 0.0254 ;;
+    2013-2015) echo 0.0230 ;;
+    2016-2019) echo 0.0236 ;;
+    2020-2022) echo 0.0169 ;;
+  esac
+}
+
+# rBergomi is deliberately LAST in the model list: it is the most
+# expensive and the one that failed in the original 2020-2022 run, so the
+# other three families land on disk before it is attempted.
+MODELS="Heston Bates Bergomi rBergomi"
+
+run_worker () {
+  local wid=$1; shift
+  local regimes=("$@")
+  local log="$HOME/worker${wid}.log"
+  : > "$log"
+  for arm in 1 0; do
+    for dr in "${regimes[@]}"; do
+      local r; r=$(rate_for "$dr")
+      {
+        echo ""
+        echo "=========================================================="
+        echo " worker $wid | arm=$arm (1=sentiment 0=baseline) | $dr | r=$r"
+        echo " started $(date '+%F %T')"
+        echo "=========================================================="
+      } >> "$log"
+      SDP_USE_SENTIMENT=$arm SDP_R=$r \
+        python3 train.py --models $MODELS --date-ranges "$dr" >> "$log" 2>&1
+      echo " finished $dr arm=$arm at $(date '+%F %T')" >> "$log"
+    done
+  done
+  echo "worker $wid DONE $(date '+%F %T')"
+}
+
+echo "launching 3 workers at $(date '+%F %T')"
+nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader
+
+# Split by (arm, regime) so all three workers get an equal share.
+# 8 (arm,regime) jobs total; worker 1 and 2 take 3 each, worker 3 takes 2
+# (2020-2022 is the heaviest regime, so it gets the lighter count).
+run_jobs () {
+  local wid=$1; shift
+  local log="$HOME/worker${wid}.log"
+  : > "$log"
+  for spec in "$@"; do
+    local arm="${spec%%:*}" dr="${spec##*:}"
+    local r; r=$(rate_for "$dr")
+    {
+      echo ""
+      echo "=========================================================="
+      echo " worker $wid | arm=$arm (1=sentiment 0=baseline) | $dr | r=$r"
+      echo " started $(date '+%F %T')"
+      echo "=========================================================="
+    } >> "$log"
+    SDP_USE_SENTIMENT=$arm SDP_R=$r \
+      python3 train.py --models $MODELS --date-ranges "$dr" >> "$log" 2>&1
+    echo " finished $dr arm=$arm at $(date '+%F %T')" >> "$log"
+  done
+  echo "worker $wid DONE $(date '+%F %T')"
+}
+
+run_jobs 1 1:2013-2015 1:2016-2019 0:2010-2012 &
+P1=$!
+run_jobs 2 1:2010-2012 0:2013-2015 0:2016-2019 &
+P2=$!
+run_jobs 3 1:2020-2022 0:2020-2022 &
+P3=$!
+
+echo "PIDs: $P1 $P2 $P3"
+wait $P1 $P2 $P3
+echo "ALL WORKERS COMPLETE $(date '+%F %T')"
+
+echo ""
+echo "checkpoints written:"
+find "$HOME/SeniorDesignProject/fine_tuning/fine_tuning_output" \
+     -name "*.pth" 2>/dev/null | wc -l
+echo "(expect 32)"

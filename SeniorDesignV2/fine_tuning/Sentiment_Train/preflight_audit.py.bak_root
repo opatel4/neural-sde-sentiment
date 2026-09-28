@@ -1,0 +1,104 @@
+"""
+preflight_audit.py  -- run in fine_tuning/Sentiment_Train/ before relaunching.
+Verifies data, weights, code fixes, config, and output isolation.
+Prints a single GO / NO-GO verdict.
+"""
+import os, sys, glob, re, importlib
+import pandas as pd, numpy as np, torch
+
+FT = os.path.expanduser("~/SeniorDesignProject/fine_tuning/Fine_Tuning_Files")
+SPX = f"{FT}/SPX_Data"
+MODELS = ["Heston","Bates","Bergomi","rBergomi"]
+REGIMES = ["2010-2012","2013-2015","2016-2019","2020-2022"]
+RATES = {"2010-2012":0.0254,"2013-2015":0.0230,"2016-2019":0.0236,"2020-2022":0.0169}
+fails, warns = [], []
+def chk(cond, label, warn=False):
+    print(f"  {'OK  ' if cond else ('WARN' if warn else 'FAIL')} {label}")
+    if not cond: (warns if warn else fails).append(label)
+
+print("="*72); print("1. OFFLINE SURFACE DATA - regenerated & SS fixed"); print("="*72)
+Ts=['0.1','0.3','0.6','0.9','1.2','1.5','1.8','2.0']
+for m in MODELS:
+    f=f"{FT}/{m}_IV_Surface_Data_Final.csv"
+    if not os.path.exists(f): chk(False, f"{m} surface CSV present"); continue
+    d=pd.read_csv(f, nrows=2000)
+    ss=[c for c in d.columns if c.startswith("SS_")]
+    iv=[c for c in d.columns if c.startswith("IV_T")]
+    u=d[[c for c in ss if "_T0.1_" in c]].iloc[0].nunique()
+    prof=np.array([[d[[c for c in ss if f"_T{T}_" in c]].iloc[i].mean() for T in Ts] for i in range(len(d))])
+    mm=prof.mean(axis=0); corr=float(np.corrcoef(mm[:-1],mm[1:])[0,1])
+    nan_iv=float(d[iv].isna().mean().mean())
+    chk(u==1 and corr>0.3 and len(iv)==88 and nan_iv<0.01,
+        f"{m:9} SS-unique={u} T-corr={corr:+.3f} IVcols={len(iv)} IV-NaN={nan_iv:.3%}")
+
+print("\n"+"="*72); print("2. OFFLINE WEIGHTS - retrained, 2-channel, strict-loadable"); print("="*72)
+os.environ["SDP_USE_IN2"]="1"
+for mod in ("config","data_utils","in2_adapter"):
+    if mod in sys.modules: importlib.reload(sys.modules[mod])
+import data_utils, config
+from in2_adapter import build_model_from_config_in2
+reg = data_utils.get_model_registry()
+for m in MODELS:
+    c=reg[m]; wp=c["weights_path"]
+    if not os.path.exists(wp): chk(False, f"{m} weights present"); continue
+    sd=torch.load(wp,map_location="cpu"); sd=sd.get("model_state_dict",sd) if isinstance(sd,dict) else sd
+    ch=sd["conv_block.0.weight"].shape[1]
+    try: build_model_from_config_in2(c,"cpu",strict=True); loaded=True
+    except Exception as e: loaded=False; print("      ",e)
+    # freshness: must match ~/offline_models
+    src=os.path.expanduser(f"~/offline_models/CNN_{m}_In2_OutBase.pth")
+    same = os.path.exists(src) and open(src,'rb').read(4096)==open(wp,'rb').read(4096)
+    chk(ch==2 and loaded and same, f"{m:9} 2ch={ch==2} strict-load={loaded} matches-retrained={same}")
+
+print("\n"+"="*72); print("3. SPX DATA - rates sane, all regime years present"); print("="*72)
+for dr in REGIMES:
+    y0,y1=dr.split("-"); yrs=list(range(int(y0),int(y1)+1))
+    miss=[y for y in yrs if not os.path.exists(f"{SPX}/cleanerSPXData_{y}_merged.csv")]
+    if miss: chk(False, f"{dr} missing years {miss}"); continue
+    r=pd.concat([pd.read_csv(f"{SPX}/cleanerSPXData_{y}_merged.csv",usecols=["r","S","Forward","daily_sentiment"],low_memory=False) for y in yrs])
+    med=r.r.median(); fs=(r.Forward/r.S).median(); sent_na=float(r.daily_sentiment.isna().mean())
+    ok = 0.0<med<0.10 and abs(fs-1)<0.02 and sent_na<0.5
+    chk(ok, f"{dr} r_med={med:.4f} (cfg {RATES[dr]}) F/S={fs:.4f} sent-NaN={sent_na:.1%}")
+
+print("\n"+"="*72); print("4. CODE FIXES"); print("="*72)
+tr=open("trainer.py").read(); tp=open("train.py").read(); ad=open("in2_adapter.py").read(); cf=open("config.py").read()
+chk("SDP_R" in tr and "torch.tensor(0.045" not in tr, "trainer: drift env-var, no hardcoded 0.045")
+chk(tr.count("self.model(_x)")==3, f"trainer: 3 In2 branches (found {tr.count('self.model(_x)')})")
+chk("SENT_SHIFT) * SENT_SCALE + SENT_OFFSET" in ad, "adapter: sentiment standardisation applied")
+chk("build_model_from_config_in2" in tp, "train.py: builds In2 model when flagged")
+chk("offline_weight_for" in tp and tp.count("offline_weight_for(")>=2, "train.py: model-aware offline weight")
+chk("_ARM_DIR" in cf, "config: arm-dependent output root")
+chk("OFFLINE_WEIGHT_BY_MODEL" in cf, "config: rBergomi offline weight override")
+
+print("\n"+"="*72); print("5. CONFIG VALUES"); print("="*72)
+chk(config.EPOCHS==750, f"EPOCHS={config.EPOCHS}")
+chk(set(config.CANDIDATE_DATE_RANGES)==set(REGIMES), f"regimes={config.CANDIDATE_DATE_RANGES}")
+print(f"       OFFLINE_WEIGHT={config.OFFLINE_WEIGHT}  by-model={getattr(config,'OFFLINE_WEIGHT_BY_MODEL',{})}")
+
+print("\n"+"="*72); print("6. OUTPUT ISOLATION (arms must not collide)"); print("="*72)
+import subprocess
+def root(arm):
+    return subprocess.run([sys.executable,"-c",
+        "import os;os.environ['SDP_USE_SENTIMENT']='%s';import config;print(config.MODEL_OUTPUT_ROOT)"%arm],
+        capture_output=True,text=True).stdout.strip().splitlines()[-1]
+r1,r0=root("1"),root("0")
+chk(r1!=r0 and "sentiment_output" in r1 and "base_output" in r0, f"arm1={r1.split('fine_tuning_output/')[-1]}  arm0={r0.split('fine_tuning_output/')[-1]}")
+out=os.path.expanduser("~/SeniorDesignProject/fine_tuning/fine_tuning_output")
+n=len(glob.glob(out+"/**/*.pth",recursive=True)) if os.path.exists(out) else 0
+chk(n==0, f"output dir clean (found {n} stale .pth)")
+
+print("\n"+"="*72); print("7. LAUNCHER"); print("="*72)
+if os.path.exists("run_parallel.sh"):
+    L=open("run_parallel.sh").read()
+    for dr,r in RATES.items():
+        chk(f"{dr}) echo {r}" in L, f"rate {dr} = {r}")
+    chk(os.access("run_parallel.sh",os.X_OK), "run_parallel.sh executable")
+    chk("SDP_USE_IN2=1" in L, "launcher exports SDP_USE_IN2=1")
+else: chk(False,"run_parallel.sh present")
+
+print("\n"+"="*72)
+if fails: print("NO-GO  -- unresolved:"); [print("   -",f) for f in fails]
+else: print("GO  -- configuration verified.")
+if warns: print("warnings:"); [print("   -",w) for w in warns]
+print("STILL UNPROVEN: that rBergomi/2013-2015 trains. Run the 10-min test.")
+print("="*72)

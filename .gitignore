@@ -1,0 +1,8 @@
+*.csv
+*.npz
+*.pt
+*.png
+*.pyc
+__pycache__/
+*.pth
+!offline_models_v3/*.pth

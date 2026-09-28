@@ -1,0 +1,11 @@
+/home/opatel4/SeniorDesignV2/fine_tuning
+Heston 2016-2019: 995 common dates, 5 parameters per day
+  assumed order: mean reversion, long-run variance, vol of vol, initial variance, correlation
+      mean reversion: baseline [0.100, 2.900] sentiment [0.100, 2.900] mean |diff| = 1.09% of range
+   long-run variance: baseline [0.012, 0.140] sentiment [0.011, 0.140] mean |diff| = 1.76% of range
+          vol of vol: baseline [0.155, 0.700] sentiment [0.162, 0.700] mean |diff| = 1.16% of range
+    initial variance: baseline [0.013, 0.140] sentiment [0.014, 0.140] mean |diff| = 1.90% of range
+         correlation: baseline [-0.899, 0.605] sentiment [-0.899, 0.618] mean |diff| = 4.15% of range
+  wrote /home/opatel4/SeniorDesignV2/fine_tuning/Sentiment_Train/figures/aor_params/FigParams_Heston_2016-2019.pdf  [91 kB]
+  wrote /home/opatel4/SeniorDesignV2/fine_tuning/Sentiment_Train/figures/aor_params/FigParams_Heston_2016-2019.png  [670 kB]
+  size 119.0 x 73.7 mm (limit 119 x 195), 600 dpi

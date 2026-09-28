@@ -1,0 +1,23 @@
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+Two separate AOR hedging figures -> /home/opatel4/SeniorDesignV2/fine_tuning/Sentiment_Train/figures/aor_fig5
+
+  [Fig5] y-ticks read: 0, 0.01, 0.01, 0.02, 0.03, 0.04
+  [Fig5] x-ticks read: 2020, 2020, 2020, 2021, 2021, 2021, 2022, 2022, 2022, 2023
+  Fig5 baseline: 712 pts, y-range [-8.700e-03, 3.974e-02]
+  Fig5 sentiment: 714 pts, y-range [-9.150e-03, 4.320e-02]
+  wrote /home/opatel4/SeniorDesignV2/fine_tuning/Sentiment_Train/figures/aor_fig5/Fig5.pdf  [24 kB]
+  wrote /home/opatel4/SeniorDesignV2/fine_tuning/Sentiment_Train/figures/aor_fig5/Fig5.png  [382 kB]
+  Fig5 size 119.0 x 61.0 mm, 600 dpi
+
+  [Fig6] y-ticks read: 0, 0.01, 0.02, 0.03, 0.04
+  [Fig6] x-ticks read: 2020, 2020, 2020, 2021, 2021, 2021, 2022, 2022, 2022, 2023
+  Fig6 baseline: 722 pts, y-range [-1.331e-03, 4.507e-02]
+  Fig6 sentiment: 715 pts, y-range [-1.376e-03, 4.082e-02]
+  wrote /home/opatel4/SeniorDesignV2/fine_tuning/Sentiment_Train/figures/aor_fig5/Fig6.pdf  [24 kB]
+  wrote /home/opatel4/SeniorDesignV2/fine_tuning/Sentiment_Train/figures/aor_fig5/Fig6.png  [385 kB]
+  Fig6 size 119.0 x 61.0 mm, 600 dpi
+
+Captions (no period at end, AOR rule):
+
+Fig5: Delta-hedged profit and loss for the Heston family in the 2020 to 2022 regime. Solid lines show the baseline arm and dashed lines the sentiment arm
+Fig6: Delta-hedged profit and loss for the rough Bergomi family in the 2020 to 2022 regime. Solid lines show the baseline arm and dashed lines the sentiment arm
